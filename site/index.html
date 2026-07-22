@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babacar Keiba KOUYATÉ </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fond : grille + lignes de branches git animées -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <svg class="bg-branches" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+    <path class="branch branch--main" d="M -50 620 C 300 620, 400 620, 550 620 C 750 620, 780 480, 980 480 C 1150 480, 1200 480, 1500 480" />
+    <path class="branch branch--feat" d="M -50 760 C 250 760, 350 760, 500 760 C 700 760, 720 620, 900 620 L 980 620" />
+    <path class="branch branch--hotfix" d="M -50 340 C 220 340, 340 340, 480 340 C 680 340, 700 480, 900 480" />
+    <circle class="commit-dot" cx="550" cy="620" r="5"/>
+    <circle class="commit-dot" cx="980" cy="480" r="5"/>
+    <circle class="commit-dot" cx="900" cy="620" r="5"/>
+    <circle class="commit-dot" cx="480" cy="340" r="5"/>
+    <circle class="commit-dot commit-dot--pulse" cx="1150" cy="480" r="6"/>
+  </svg>
+
+  <main class="stage">
+    <div class="terminal" role="group" aria-label="Fenêtre terminal GitOps">
+
+      <div class="terminal__bar">
+        <span class="terminal__path">kouyate@node-01</span>
+        <span class="terminal__sep">:</span>
+        <span class="terminal__dir">~/gitops-platform</span>
+        <span class="terminal__branch">
+          <svg viewBox="0 0 16 16" class="branch-icon" aria-hidden="true">
+            <circle cx="4" cy="3" r="1.6" fill="currentColor"/>
+            <circle cx="4" cy="13" r="1.6" fill="currentColor"/>
+            <circle cx="12" cy="8" r="1.6" fill="currentColor"/>
+            <path d="M4 4.6 V11.4 M4 6 C4 8 6 8 8 8 H10.4" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          </svg>
+          main
+        </span>
+      </div>
+
+      <div class="terminal__body">
+        <p class="line line--cmd">
+          <span class="prompt">$</span> git show <span class="dim">--stat HEAD</span>
+        </p>
+
+        <p class="line line--meta">commit <span class="hash">7f1a9c3</span> <span class="dim">(HEAD -&gt; main, origin/main)</span></p>
+        <p class="line line--meta dim">Author: Babacar Keiba KOUYATÉ &lt;kouyate@esmt.sn&gt;</p>
+        <p class="line line--meta dim">Date:   <span id="live-date"></span></p>
+
+        <div class="reveal">
+          <p class="eyebrow">// identité du dépôt</p>
+          <h1 class="name">
+            <span class="name__line">Babacar&nbsp;Keiba</span>
+            <span class="name__line name__line--accent">KOUYATÉ</span>
+          </h1>
+
+          <div class="tagline">
+            <span class="tagline__bracket">[</span>
+            <span class="tagline__text" id="typed-tag"></span><span class="caret">▌</span>
+            <span class="tagline__bracket">]</span>
+          </div>
+        </div>
+
+        <div class="status-row">
+          <span class="chip chip--ok"><span class="dot"></span>build: passing</span>
+          <span class="chip chip--ci">CI/CD: ArgoCD</span>
+          <span class="chip chip--infra">infra: Kubernetes</span>
+        </div>
+
+        <p class="line line--prompt-final">
+          <span class="prompt">$</span> <span class="cursor-block">_</span>
+        </p>
+      </div>
+    </div>
+
+    <footer class="meta-footer">
+      <span>ESMT — M1 Sécurité des Systèmes d'Information</span>
+      <span class="meta-footer__dot">•</span>
+      <span>Réseaux &amp; Cybersécurité</span>
+    </footer>
+  </main>
+
+  <script>
+    // Date courante au format "log" git
+    const d = new Date();
+    const opts = { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    document.getElementById('live-date').textContent = d.toLocaleString('fr-FR', opts);
+
+    // Effet de frappe pour "PLATEFORME GITOPS"
+    const target = "PLATEFORME GITOPS";
+    const el = document.getElementById('typed-tag');
+    let i = 0;
+    function type() {
+      if (i <= target.length) {
+        el.textContent = target.slice(0, i);
+        i++;
+        setTimeout(type, 65);
+      }
+    }
+    setTimeout(type, 900);
+  </script>
+</body>
+</html>
